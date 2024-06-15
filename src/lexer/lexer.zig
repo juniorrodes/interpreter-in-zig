@@ -406,24 +406,29 @@ test "New_Token" {
         .literal = LiteralType.none,
     } };
 
-    std.debug.print("\nTotal steps: {d}\n", .{result.len});
+    //std.log.info("\nTotal steps: {d}\n", .{result.len});
 
     for (result, 0..result.len) |v, i| {
+        _ = i;
+
         const t = try l.NextToken();
         testing.expect(v.tt == t.tt) catch |err| {
-            std.debug.print("#{d} --> got token: {s}, expect token: {s}\n", .{ i, @tagName(t.tt), @tagName(v.tt) });
+            //std.log.info("#{d} --> got token: {s}, expect token: {s}\n", .{ i, @tagName(t.tt), @tagName(v.tt) });
+            //std.log.err("error: {any}", .{err});
             return err;
         };
         switch (t.literal) {
             LiteralType.LiteralS => {
                 testing.expect(std.mem.eql(u8, v.literal.LiteralS, t.literal.LiteralS)) catch |err| {
-                    std.debug.print("#{d} --> got string literal: {s}, expect string literal: {s}\n", .{ i, t.literal.LiteralS, v.literal.LiteralS });
+                    //std.log.info("#{d} --> got string literal: {s}, expect string literal: {s}\n", .{ i, t.literal.LiteralS, v.literal.LiteralS });
+                    //std.log.err("error: {any}", .{err});
                     return err;
                 };
             },
             LiteralType.LiteralI => {
                 testing.expect(v.literal.LiteralI == t.literal.LiteralI) catch |err| {
-                    std.debug.print("#{d} --> got int: {d}, expect int: {d}\n", .{ i, t.literal.LiteralI, v.literal.LiteralI });
+                    //std.log.info("#{d} --> got int: {d}, expect int: {d}\n", .{ i, t.literal.LiteralI, v.literal.LiteralI });
+                    //std.log.err("error: {any}", .{err});
                     return err;
                 };
             },
